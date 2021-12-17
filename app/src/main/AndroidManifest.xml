@@ -3,6 +3,7 @@
     package="com.example.empire">
 
     <application
+        android:name=".di.HiltApp"
         android:allowBackup="true"
         android:fullBackupOnly="true"
         android:icon="@mipmap/ic_launcher"
