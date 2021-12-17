@@ -13,18 +13,21 @@ class CharacterRepository @Inject constructor(
     private val webManager: WebManager
 ) : ContentReceiver {
 
-    val characterList = MutableLiveData<List<Character>>()
+    val characterListLiveData = MutableLiveData<List<Character>>()
+    private val characterList = ArrayList<Character>()
 
     init {
         webManager.receiver = this
     }
 
     override fun onNewContent(body: PeopleResponse?) {
-        characterList.value = body?.results?.map {
-            Character(it.name)
+        body?.results?.forEach {
+            characterList.add(Character(it.name))
         }
 
-        //body?.next?.let { webManager.getCharactersByPage(it) } todo
+        body?.next?.let { webManager.getCharactersByPage(it) } ?: run {
+            characterListLiveData.value = characterList
+        }
     }
 
     fun getCharacters() {

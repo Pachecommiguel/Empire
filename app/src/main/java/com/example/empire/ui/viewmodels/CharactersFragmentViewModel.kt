@@ -10,7 +10,7 @@ class CharactersFragmentViewModel @Inject constructor(
     private val repository: CharacterRepository
 ) : ViewModel() {
 
-    val characterList = repository.characterList
+    val characterList = repository.characterListLiveData
 
     init {
         repository.getCharacters()
