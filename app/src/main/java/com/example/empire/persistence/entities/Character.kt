@@ -1,4 +1,5 @@
 package com.example.empire.persistence.entities
 
-class Character {
-}
+data class Character(
+    val name : String
+)
