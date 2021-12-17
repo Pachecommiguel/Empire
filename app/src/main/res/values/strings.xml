@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Empire</string>
+    <string name="characters">Characters</string>
+    <string name="about">About</string>
 </resources>
