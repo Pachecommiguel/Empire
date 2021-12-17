@@ -23,6 +23,8 @@ class CharacterRepository @Inject constructor(
         characterList.value = body?.results?.map {
             Character(it.name)
         }
+
+        //body?.next?.let { webManager.getCharactersByPage(it) } todo
     }
 
     fun getCharacters() {

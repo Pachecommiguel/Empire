@@ -26,4 +26,17 @@ class WebManager @Inject constructor(
             }
         })
     }
+
+    fun getCharactersByPage(url: String) {
+        peopleWebservice.getPeopleByPage(url).enqueue(object : Callback<PeopleResponse> {
+
+            override fun onResponse(call: Call<PeopleResponse>, response: Response<PeopleResponse>) {
+                receiver.onNewContent(response.body())
+            }
+
+            override fun onFailure(call: Call<PeopleResponse>, t: Throwable) {
+                Log.e("WebManager", "onFailure" + t.printStackTrace())
+            }
+        })
+    }
 }
