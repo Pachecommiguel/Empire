@@ -10,5 +10,6 @@ class CharacterViewHolder(
 
     fun bind(character: Character) {
         binding.character = character
+        binding.avatar.setImageBitmap(character.avatar)
     }
 }

@@ -1,7 +1,9 @@
 package com.example.empire.persistence.entities
 
+import android.graphics.Bitmap
+
 data class Character(
-    val id: String,
-    val name : String,
-    var language: String? = null
+    var name : String,
+    var language: String? = null,
+    var avatar: Bitmap? = null
 )

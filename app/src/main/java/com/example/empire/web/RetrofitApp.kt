@@ -5,8 +5,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitApp {
 
-    fun getInstance(): Retrofit = Retrofit.Builder()
-        .baseUrl("https://swapi.py4e.com/api/")
+    fun getInstance(baseUrl: String): Retrofit = Retrofit.Builder()
+        .baseUrl(baseUrl)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 }

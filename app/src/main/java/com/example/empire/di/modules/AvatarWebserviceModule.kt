@@ -1,7 +1,7 @@
 package com.example.empire.di.modules
 
 import com.example.empire.web.RetrofitApp
-import com.example.empire.web.ws.SpeciesWebservice
+import com.example.empire.web.ws.AvatarWebservice
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,11 +10,11 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object SpeciesWebserviceModule {
+object AvatarWebserviceModule {
 
     @Singleton
     @Provides
-    fun provideSpeciesWebservice(): SpeciesWebservice = RetrofitApp
-        .getInstance("https://swapi.py4e.com/api/")
-        .create(SpeciesWebservice::class.java)
+    fun provideAvatarWebservice(): AvatarWebservice = RetrofitApp
+        .getInstance("https://eu.ui-avatars.com/api/")
+        .create(AvatarWebservice::class.java)
 }

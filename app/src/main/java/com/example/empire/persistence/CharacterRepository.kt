@@ -1,5 +1,7 @@
 package com.example.empire.persistence
 
+import android.graphics.Bitmap
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.empire.persistence.entities.Character
 import com.example.empire.web.ContentReceiver
@@ -17,24 +19,37 @@ class CharacterRepository @Inject constructor(
     val characterListLiveData = MutableLiveData<List<Character>>()
     private val characterList = ArrayList<Character>()
 
-    init { webManager.receiver = this }
+    init {
+        webManager.receiver = this
+    }
 
     override fun onPeopleContent(body: PeopleResponse?) {
         body?.results?.forEach { result ->
-            characterList.add(Character(result.url, result.name))
-            result.species.let { if (it.isNotEmpty()) webManager.getSpecies(it[0]) }
+            result.species.let {
+                if (it.isNotEmpty()) {
+                    webManager.getSpecies(result.name, it[0])
+                }
+            }
+            characterList.add(Character(result.name))
         }
 
-        body?.next?.let { webManager.getCharactersByPage(it) } ?: run {
-            characterListLiveData.value = characterList
+        body?.next?.let { webManager.getCharactersByPage(it) }
+    }
+
+    override fun onSpeciesContent(name: String, body: SpeciesResponse?) {
+        characterList.find { it.name == name }.let {
+            it?.language = body?.language
+            webManager.getAvatar(name, it?.language)
         }
     }
 
-    override fun onSpeciesContent(body: SpeciesResponse?) {
-        body?.people?.forEach { people ->
-            characterList.find { it.id == people }.let {
-                it?.language ?: run { it?.language = body.language }
-            }
+    override fun onAvatarContent(name: String, bitmap: Bitmap?) {
+        characterList.find { it.name == name }.let {
+            it?.avatar = bitmap
+        }
+
+        if (characterList.last().name == name) {
+            characterListLiveData.value = characterList
         }
     }
 

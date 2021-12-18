@@ -1,10 +1,14 @@
 package com.example.empire.web
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.Log
 import com.example.empire.web.responses.PeopleResponse
 import com.example.empire.web.responses.SpeciesResponse
+import com.example.empire.web.ws.AvatarWebservice
 import com.example.empire.web.ws.PeopleWebservice
 import com.example.empire.web.ws.SpeciesWebservice
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -12,7 +16,8 @@ import javax.inject.Inject
 
 class WebManager @Inject constructor(
     private val peopleWebservice: PeopleWebservice,
-    private val speciesWebservice: SpeciesWebservice
+    private val speciesWebservice: SpeciesWebservice,
+    private val avatarWebservice: AvatarWebservice
 ) {
 
     lateinit var receiver: ContentReceiver
@@ -20,7 +25,10 @@ class WebManager @Inject constructor(
     fun getCharacters() {
         peopleWebservice.getPeople().enqueue(object : Callback<PeopleResponse> {
 
-            override fun onResponse(call: Call<PeopleResponse>, response: Response<PeopleResponse>) {
+            override fun onResponse(
+                call: Call<PeopleResponse>,
+                response: Response<PeopleResponse>
+            ) {
                 receiver.onPeopleContent(response.body())
             }
 
@@ -32,7 +40,10 @@ class WebManager @Inject constructor(
 
     fun getCharactersByPage(url: String) {
         peopleWebservice.getPeopleByPage(url).enqueue(object : Callback<PeopleResponse> {
-            override fun onResponse(call: Call<PeopleResponse>, response: Response<PeopleResponse>) {
+            override fun onResponse(
+                call: Call<PeopleResponse>,
+                response: Response<PeopleResponse>
+            ) {
                 receiver.onPeopleContent(response.body())
             }
 
@@ -42,19 +53,30 @@ class WebManager @Inject constructor(
         })
     }
 
-    fun getSpecies(url: String) {
+    fun getSpecies(name: String, url: String) {
         speciesWebservice.getSpecies(url).enqueue(object : Callback<SpeciesResponse> {
             override fun onResponse(
                 call: Call<SpeciesResponse>,
                 response: Response<SpeciesResponse>
             ) {
-                receiver.onSpeciesContent(response.body())
+                receiver.onSpeciesContent(name, response.body())
             }
 
             override fun onFailure(call: Call<SpeciesResponse>, t: Throwable) {
                 Log.e("getSpecies", "onFailure" + t.printStackTrace())
             }
+        })
+    }
 
+    fun getAvatar(name: String, language: String?) {
+        avatarWebservice.getAvatar(language).enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                receiver.onAvatarContent(name, BitmapFactory.decodeStream(response.body()?.byteStream()))
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.e("getAvatar", "onFailure" + t.printStackTrace())
+            }
         })
     }
 }

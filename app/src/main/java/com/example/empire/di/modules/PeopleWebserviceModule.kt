@@ -14,6 +14,7 @@ object PeopleWebserviceModule {
 
     @Singleton
     @Provides
-    fun providePeopleWebservice(): PeopleWebservice = RetrofitApp.getInstance()
+    fun providePeopleWebservice(): PeopleWebservice = RetrofitApp
+        .getInstance("https://swapi.py4e.com/api/")
         .create(PeopleWebservice::class.java)
 }

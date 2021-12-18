@@ -13,6 +13,8 @@ class CharactersFragmentViewModel @Inject constructor(
     val characterList = repository.characterListLiveData
 
     init {
-        repository.getCharacters()
+        if (characterList.value.isNullOrEmpty()) {
+            repository.getCharacters()
+        }
     }
 }
