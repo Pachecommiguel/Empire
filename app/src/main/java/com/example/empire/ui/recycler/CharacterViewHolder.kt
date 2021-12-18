@@ -5,7 +5,7 @@ import com.example.empire.databinding.CharacterRecyclerViewItemBinding
 import com.example.empire.persistence.entities.Character
 
 class CharacterViewHolder(
-    val binding: CharacterRecyclerViewItemBinding
+    private val binding: CharacterRecyclerViewItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(character: Character) {

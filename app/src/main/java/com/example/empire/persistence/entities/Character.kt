@@ -5,5 +5,6 @@ import android.graphics.Bitmap
 data class Character(
     var name : String,
     var language: String? = null,
-    var avatar: Bitmap? = null
+    var avatar: Bitmap? = null,
+    var vehicles: ArrayList<String?> = arrayListOf()
 )

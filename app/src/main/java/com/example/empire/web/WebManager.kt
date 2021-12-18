@@ -1,13 +1,14 @@
 package com.example.empire.web
 
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
 import com.example.empire.web.responses.PeopleResponse
 import com.example.empire.web.responses.SpeciesResponse
+import com.example.empire.web.responses.VehicleResponse
 import com.example.empire.web.ws.AvatarWebservice
 import com.example.empire.web.ws.PeopleWebservice
 import com.example.empire.web.ws.SpeciesWebservice
+import com.example.empire.web.ws.VehicleWebservice
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class WebManager @Inject constructor(
     private val peopleWebservice: PeopleWebservice,
     private val speciesWebservice: SpeciesWebservice,
-    private val avatarWebservice: AvatarWebservice
+    private val avatarWebservice: AvatarWebservice,
+    private val vehicleWebservice: VehicleWebservice
 ) {
 
     lateinit var receiver: ContentReceiver
@@ -76,6 +78,21 @@ class WebManager @Inject constructor(
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Log.e("getAvatar", "onFailure" + t.printStackTrace())
+            }
+        })
+    }
+
+    fun getVehicle(name: String, url: String) {
+        vehicleWebservice.getVehicle(url).enqueue(object : Callback<VehicleResponse> {
+            override fun onResponse(
+                call: Call<VehicleResponse>,
+                response: Response<VehicleResponse>
+            ) {
+                receiver.onVehicleContent(name, response.body())
+            }
+
+            override fun onFailure(call: Call<VehicleResponse>, t: Throwable) {
+                Log.e("getVehicle", "onFailure" + t.printStackTrace())
             }
         })
     }

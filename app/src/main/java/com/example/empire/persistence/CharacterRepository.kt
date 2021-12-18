@@ -1,13 +1,13 @@
 package com.example.empire.persistence
 
 import android.graphics.Bitmap
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.empire.persistence.entities.Character
 import com.example.empire.web.ContentReceiver
 import com.example.empire.web.WebManager
 import com.example.empire.web.responses.PeopleResponse
 import com.example.empire.web.responses.SpeciesResponse
+import com.example.empire.web.responses.VehicleResponse
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -25,12 +25,9 @@ class CharacterRepository @Inject constructor(
 
     override fun onPeopleContent(body: PeopleResponse?) {
         body?.results?.forEach { result ->
-            result.species.let {
-                if (it.isNotEmpty()) {
-                    webManager.getSpecies(result.name, it[0])
-                }
-            }
             characterList.add(Character(result.name))
+            result.species.forEach { webManager.getSpecies(result.name, it) }
+            result.vehicles.forEach { webManager.getVehicle(result.name, it) }
         }
 
         body?.next?.let { webManager.getCharactersByPage(it) }
@@ -50,6 +47,12 @@ class CharacterRepository @Inject constructor(
 
         if (characterList.last().name == name) {
             characterListLiveData.value = characterList
+        }
+    }
+
+    override fun onVehicleContent(name: String, body: VehicleResponse?) {
+        characterList.find { it.name == name }.let {
+            it?.vehicles?.add(body?.name)
         }
     }
 
