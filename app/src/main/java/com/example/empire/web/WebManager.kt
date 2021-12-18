@@ -2,9 +2,9 @@ package com.example.empire.web
 
 import android.util.Log
 import com.example.empire.web.responses.PeopleResponse
-import com.example.empire.web.responses.VehicleResponse
+import com.example.empire.web.responses.SpeciesResponse
 import com.example.empire.web.ws.PeopleWebservice
-import com.example.empire.web.ws.VehiclesWebservice
+import com.example.empire.web.ws.SpeciesWebservice
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class WebManager @Inject constructor(
     private val peopleWebservice: PeopleWebservice,
-    private val vehiclesWebservice: VehiclesWebservice
+    private val speciesWebservice: SpeciesWebservice
 ) {
 
     lateinit var receiver: ContentReceiver
@@ -25,7 +25,7 @@ class WebManager @Inject constructor(
             }
 
             override fun onFailure(call: Call<PeopleResponse>, t: Throwable) {
-                Log.e("WebManager", "onFailure" + t.printStackTrace())
+                Log.e("getPeople", "onFailure" + t.printStackTrace())
             }
         })
     }
@@ -42,18 +42,19 @@ class WebManager @Inject constructor(
         })
     }
 
-    fun getVehicle(url: String) {
-        vehiclesWebservice.getVehicle(url).enqueue(object : Callback<VehicleResponse> {
+    fun getSpecies(url: String) {
+        speciesWebservice.getSpecies(url).enqueue(object : Callback<SpeciesResponse> {
             override fun onResponse(
-                call: Call<VehicleResponse>,
-                response: Response<VehicleResponse>
+                call: Call<SpeciesResponse>,
+                response: Response<SpeciesResponse>
             ) {
-                receiver.onVehicleContent(response.body())
+                receiver.onSpeciesContent(response.body())
             }
 
-            override fun onFailure(call: Call<VehicleResponse>, t: Throwable) {
-                Log.e("getVehicle", "onFailure" + t.printStackTrace())
+            override fun onFailure(call: Call<SpeciesResponse>, t: Throwable) {
+                Log.e("getSpecies", "onFailure" + t.printStackTrace())
             }
+
         })
     }
 }

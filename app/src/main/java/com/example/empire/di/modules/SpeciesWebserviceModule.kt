@@ -1,7 +1,7 @@
 package com.example.empire.di.modules
 
 import com.example.empire.web.RetrofitApp
-import com.example.empire.web.ws.VehiclesWebservice
+import com.example.empire.web.ws.SpeciesWebservice
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -10,10 +10,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object VehiclesWebserviceModule {
+object SpeciesWebserviceModule {
 
     @Singleton
     @Provides
-    fun provideVehiclesWebservice(): VehiclesWebservice = RetrofitApp.getInstance()
-        .create(VehiclesWebservice::class.java)
+    fun provideSpeciesWebservice(): SpeciesWebservice = RetrofitApp.getInstance()
+        .create(SpeciesWebservice::class.java)
 }
