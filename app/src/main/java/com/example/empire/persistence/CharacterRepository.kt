@@ -1,8 +1,10 @@
 package com.example.empire.persistence
 
 import android.graphics.Bitmap
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.empire.persistence.entities.Character
+import com.example.empire.utils.StringUtil
 import com.example.empire.web.ContentReceiver
 import com.example.empire.web.WebManager
 import com.example.empire.web.responses.PeopleResponse
@@ -34,9 +36,11 @@ class CharacterRepository @Inject constructor(
     }
 
     override fun onSpeciesContent(name: String, body: SpeciesResponse?) {
-        characterList.find { it.name == name }.let {
-            it?.language = body?.language
-            webManager.getAvatar(name, it?.language)
+        body?.language?.let { lang ->
+            characterList.find { it.name == name }.let { char ->
+                char?.language = lang
+                webManager.getAvatar(name, StringUtil.getFormattedLanguage(lang))
+            }
         }
     }
 
