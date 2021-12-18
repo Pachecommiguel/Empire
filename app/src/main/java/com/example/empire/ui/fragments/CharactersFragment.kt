@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.empire.databinding.FragmentCharactersBinding
+import com.example.empire.ui.LoadingLayerDelegate
 import com.example.empire.ui.recycler.CharacterListAdapter
 import com.example.empire.ui.viewmodels.CharactersFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,7 +30,10 @@ class CharactersFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
         }
 
-        viewModel.characterList.observe(viewLifecycleOwner, listAdapter::submitList)
+        viewModel.characterList.observe(viewLifecycleOwner, {
+            listAdapter.submitList(it)
+            (activity as LoadingLayerDelegate).hideLoadingLayer()
+        })
 
         return binding.root
     }
