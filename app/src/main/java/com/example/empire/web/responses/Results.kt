@@ -3,7 +3,6 @@ package com.example.empire.web.responses
 import com.google.gson.annotations.SerializedName
 
 data class Results (
-
     @SerializedName("hair_color") val hairColor : String,
     @SerializedName("skin_color") val skinColor : String,
     @SerializedName("eye_color") val eyeColor : String,

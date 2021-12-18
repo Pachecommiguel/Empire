@@ -24,7 +24,7 @@ class CharactersFragment : Fragment() {
         val listAdapter = CharacterListAdapter()
         val binding = FragmentCharactersBinding.inflate(inflater, container, false)
 
-        binding.addressRecyclerView.apply {
+        binding.characterRecyclerView.apply {
             adapter = listAdapter
             layoutManager = LinearLayoutManager(activity)
         }
