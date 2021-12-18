@@ -2,4 +2,6 @@
     <string name="app_name">Empire</string>
     <string name="characters">Characters</string>
     <string name="about">About</string>
+    <string name="dev_name">Miguel Pacheco de Matos</string>
+    <string name="dev_birth_date">02/03/1988</string>
 </resources>
