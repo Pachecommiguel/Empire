@@ -21,5 +21,12 @@
             android:text="@{character.name}"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/language"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{character.language}"
+            app:layout_constraintTop_toBottomOf="@id/name" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

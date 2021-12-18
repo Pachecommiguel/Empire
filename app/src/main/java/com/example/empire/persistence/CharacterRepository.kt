@@ -17,14 +17,12 @@ class CharacterRepository @Inject constructor(
     val characterListLiveData = MutableLiveData<List<Character>>()
     private val characterList = ArrayList<Character>()
 
-    init {
-        webManager.receiver = this
-    }
+    init { webManager.receiver = this }
 
     override fun onPeopleContent(body: PeopleResponse?) {
         body?.results?.forEach { result ->
-            characterList.add(Character(result.name))
-            webManager.getSpecies(result.species[0])
+            characterList.add(Character(result.url, result.name))
+            result.species.let { if (it.isNotEmpty()) webManager.getSpecies(it[0]) }
         }
 
         body?.next?.let { webManager.getCharactersByPage(it) } ?: run {
@@ -33,7 +31,11 @@ class CharacterRepository @Inject constructor(
     }
 
     override fun onSpeciesContent(body: SpeciesResponse?) {
-        TODO("Not yet implemented")
+        body?.people?.forEach { people ->
+            characterList.find { it.id == people }.let {
+                it?.language ?: run { it?.language = body.language }
+            }
+        }
     }
 
     fun getCharacters() {
