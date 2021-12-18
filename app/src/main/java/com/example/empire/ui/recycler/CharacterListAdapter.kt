@@ -1,6 +1,7 @@
 package com.example.empire.ui.recycler
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -12,30 +13,30 @@ class CharacterListAdapter : ListAdapter<Character, CharacterViewHolder>(Charact
 
     private lateinit var binding: CharacterRecyclerViewItemBinding
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
-        binding = CharacterRecyclerViewItemBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder =
+        CharacterViewHolder(CharacterRecyclerViewItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
-        )
-
-        return CharacterViewHolder(binding)
-    }
+        ).also { binding = it })
 
     override fun onBindViewHolder(holder: CharacterViewHolder, position: Int) {
+        val item = getItem(position)
         val params = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
 
-        getItem(position).let {
-            it.vehicles.forEach {
+        item.vehicles.forEach {
+            binding.vehicles.visibility = View.VISIBLE
+            it?.let {
                 TextView(holder.itemView.context).apply {
                     layoutParams = params
                     text = it
                 }.also { binding.layout.addView(it) }
             }
-            holder.bind(it)
         }
+
+        holder.bind(item)
     }
 }

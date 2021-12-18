@@ -4,4 +4,5 @@
     <string name="about">About</string>
     <string name="dev_name">Miguel Pacheco de Matos</string>
     <string name="dev_birth_date">02/03/1988</string>
+    <string name="vehicles">VEHICLES</string>
 </resources>

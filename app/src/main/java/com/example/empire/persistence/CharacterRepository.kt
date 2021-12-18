@@ -1,7 +1,6 @@
 package com.example.empire.persistence
 
 import android.graphics.Bitmap
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.empire.persistence.entities.Character
 import com.example.empire.utils.StringUtil
@@ -28,7 +27,10 @@ class CharacterRepository @Inject constructor(
     override fun onPeopleContent(body: PeopleResponse?) {
         body?.results?.forEach { result ->
             characterList.add(Character(result.name))
-            result.species.forEach { webManager.getSpecies(result.name, it) }
+            when(result.species.isNullOrEmpty()) {
+                true -> webManager.getAvatar(result.name, "NA")
+                false -> webManager.getSpecies(result.name, result.species[0])
+            }
             result.vehicles.forEach { webManager.getVehicle(result.name, it) }
         }
 
