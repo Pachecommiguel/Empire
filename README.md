@@ -6,3 +6,5 @@ Android Challenge MVVM with:
 - Hilt
 - Coroutines
 - Navigation
+
+Used Retrofit for handling HTTP requests
