@@ -2,6 +2,7 @@ package com.example.empire.persistence
 
 import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
+import com.example.empire.persistence.db.DbManager
 import com.example.empire.persistence.entities.Character
 import com.example.empire.utils.StringUtil
 import com.example.empire.web.ContentReceiver
@@ -14,7 +15,8 @@ import javax.inject.Singleton
 
 @Singleton
 class CharacterRepository @Inject constructor(
-    private val webManager: WebManager
+    private val webManager: WebManager,
+    private val dbManager: DbManager
 ) : ContentReceiver {
 
     val characterListLiveData = MutableLiveData<List<Character>>()
