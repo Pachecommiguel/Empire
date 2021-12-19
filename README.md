@@ -2,9 +2,7 @@
 
 Android Challenge MVVM with:
 - Room
-- Retrofit
+- Retrofit (prefered for handling HTTP requests)
 - Hilt
 - Coroutines
 - Navigation
-
-Note: Used Retrofit for handling HTTP requests
