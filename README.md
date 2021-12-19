@@ -7,4 +7,4 @@ Android Challenge MVVM with:
 - Coroutines
 - Navigation
 
-Used Retrofit for handling HTTP requests
+Note: Used Retrofit for handling HTTP requests
