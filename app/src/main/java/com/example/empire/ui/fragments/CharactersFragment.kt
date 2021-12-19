@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.empire.databinding.FragmentCharactersBinding
+import com.example.empire.persistence.entities.Character
 import com.example.empire.ui.LoadingLayerDelegate
 import com.example.empire.ui.recycler.CharacterListAdapter
 import com.example.empire.ui.recycler.FavoriteListener
@@ -32,14 +33,16 @@ class CharactersFragment : Fragment(), FavoriteListener {
         }
 
         viewModel.characterList.observe(viewLifecycleOwner, {
-            listAdapter.submitList(it)
-            (activity as LoadingLayerDelegate).hideLoadingLayer()
+            if (it.isNotEmpty()) {
+                listAdapter.submitList(it)
+                (activity as LoadingLayerDelegate).hideLoadingLayer()
+            }
         })
 
         return binding.root
     }
 
-    override fun onFavoriteClick(checked: Boolean) {
-
+    override fun onFavoriteClick(checked: Boolean, character: Character) {
+        viewModel.onFavoriteClick(checked, character)
     }
 }

@@ -62,6 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@drawable/favorite"
+            android:checked="@{character.favorite}"
             app:layout_constraintBottom_toBottomOf="@+id/avatar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/avatar" />

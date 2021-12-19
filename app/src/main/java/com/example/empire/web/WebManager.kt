@@ -26,7 +26,6 @@ class WebManager @Inject constructor(
 
     fun getCharacters() {
         peopleWebservice.getPeople().enqueue(object : Callback<PeopleResponse> {
-
             override fun onResponse(
                 call: Call<PeopleResponse>,
                 response: Response<PeopleResponse>

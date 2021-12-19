@@ -1,16 +1,22 @@
 package com.example.empire.persistence.db
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.room.TypeConverter
 import com.google.gson.Gson
+import java.io.ByteArrayOutputStream
 
 object CharacterConverter {
 
     @TypeConverter
-    fun toJson(bitmap: Bitmap): String = Gson().toJson(bitmap)
+    fun fromBitmap(bitmap: Bitmap): ByteArray {
+        val outputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+        return outputStream.toByteArray()
+    }
 
     @TypeConverter
-    fun fromJsonToBitmap(src: String): Bitmap = Gson().fromJson(src, Bitmap::class.java)
+    fun toBitmap(byteArray: ByteArray): Bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
 
     @TypeConverter
     fun toJson(list: ArrayList<String?>): String = Gson().toJson(list)

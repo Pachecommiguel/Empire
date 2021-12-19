@@ -2,6 +2,8 @@ package com.example.empire.persistence.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
 import androidx.room.Query
 import com.example.empire.persistence.entities.Character
 
@@ -9,4 +11,10 @@ import com.example.empire.persistence.entities.Character
 interface CharacterDao {
     @Query("SELECT * FROM Character")
     fun getAll(): LiveData<List<Character>>
+
+    @Insert
+    fun insert(character: Character)
+
+    @Delete
+    fun delete(character: Character)
 }

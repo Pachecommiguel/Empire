@@ -1,7 +1,7 @@
 package com.example.empire.persistence
 
 import android.graphics.Bitmap
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.MediatorLiveData
 import com.example.empire.persistence.db.DbManager
 import com.example.empire.persistence.entities.Character
 import com.example.empire.utils.StringUtil
@@ -16,10 +16,10 @@ import javax.inject.Singleton
 @Singleton
 class CharacterRepository @Inject constructor(
     private val webManager: WebManager,
-    private val dbManager: DbManager
+    private val dbManager: DbManager,
+    val characterListLiveData: MediatorLiveData<List<Character>>
 ) : ContentReceiver {
 
-    val characterListLiveData = MutableLiveData<List<Character>>()
     private val characterList = ArrayList<Character>()
 
     init {
@@ -66,5 +66,13 @@ class CharacterRepository @Inject constructor(
 
     fun getCharacters() {
         webManager.getCharacters()
+    }
+
+    fun insert(character: Character) {
+        dbManager.insert(character)
+    }
+
+    fun remove(character: Character) {
+        dbManager.delete(character)
     }
 }

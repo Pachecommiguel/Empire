@@ -11,6 +11,6 @@ class CharacterViewHolder(
     fun bind(character: Character, listener: FavoriteListener) {
         binding.character = character
         binding.avatar.setImageBitmap(character.avatar)
-        binding.checkbox.apply { setOnClickListener { listener.onFavoriteClick(isChecked) } }
+        binding.checkbox.apply { setOnClickListener { listener.onFavoriteClick(isChecked, character) } }
     }
 }
