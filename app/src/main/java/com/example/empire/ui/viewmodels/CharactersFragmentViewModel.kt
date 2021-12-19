@@ -16,8 +16,10 @@ class CharactersFragmentViewModel @Inject constructor(
     val characterList = repository.characterListLiveData
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.getCharacters()
+        if (characterList.value.isNullOrEmpty()) {
+            viewModelScope.launch(Dispatchers.IO) {
+                repository.getCharacters()
+            }
         }
     }
 

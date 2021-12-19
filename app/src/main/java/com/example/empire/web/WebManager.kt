@@ -3,12 +3,10 @@ package com.example.empire.web
 import android.graphics.BitmapFactory
 import android.util.Log
 import com.example.empire.web.responses.PeopleResponse
+import com.example.empire.web.responses.PlanetResponse
 import com.example.empire.web.responses.SpeciesResponse
 import com.example.empire.web.responses.VehicleResponse
-import com.example.empire.web.ws.AvatarWebservice
-import com.example.empire.web.ws.PeopleWebservice
-import com.example.empire.web.ws.SpeciesWebservice
-import com.example.empire.web.ws.VehicleWebservice
+import com.example.empire.web.ws.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,7 +17,8 @@ class WebManager @Inject constructor(
     private val peopleWebservice: PeopleWebservice,
     private val speciesWebservice: SpeciesWebservice,
     private val avatarWebservice: AvatarWebservice,
-    private val vehicleWebservice: VehicleWebservice
+    private val vehicleWebservice: VehicleWebservice,
+    private val planetWebservice: PlanetWebservice
 ) {
 
     lateinit var receiver: ContentReceiver
@@ -93,6 +92,21 @@ class WebManager @Inject constructor(
 
             override fun onFailure(call: Call<VehicleResponse>, t: Throwable) {
                 Log.e("getVehicle", "onFailure" + t.printStackTrace())
+            }
+        })
+    }
+
+    fun getPlanet(name: String, url: String) {
+        planetWebservice.getPlanet(url).enqueue(object : Callback<PlanetResponse> {
+            override fun onResponse(
+                call: Call<PlanetResponse>,
+                response: Response<PlanetResponse>
+            ) {
+                receiver.onPlanetContent(name, response.body())
+            }
+
+            override fun onFailure(call: Call<PlanetResponse>, t: Throwable) {
+                Log.e("getPlanet", "onFailure" + t.printStackTrace())
             }
         })
     }

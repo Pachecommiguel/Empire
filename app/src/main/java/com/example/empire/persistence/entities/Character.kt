@@ -11,5 +11,9 @@ data class Character(
     var language: String? = null,
     var avatar: Bitmap? = null,
     var vehicles: ArrayList<Vehicle> = arrayListOf(),
-    var isFavorite: Boolean = false
+    var isFavorite: Boolean = false,
+    var gender: String,
+    var skinColor: String,
+    var homeworld: Planet?,
+    var movies: ArrayList<Film> = arrayListOf()
 )

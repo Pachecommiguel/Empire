@@ -1,5 +1,6 @@
 package com.example.empire.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.empire.databinding.FragmentCharactersBinding
 import com.example.empire.persistence.entities.Character
 import com.example.empire.ui.LoadingLayerDelegate
+import com.example.empire.ui.activities.DetailsActivity
 import com.example.empire.ui.recycler.adapters.CharacterListAdapter
 import com.example.empire.ui.recycler.FavoriteListener
 import com.example.empire.ui.viewmodels.CharactersFragmentViewModel
@@ -19,6 +21,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class CharactersFragment : Fragment(), FavoriteListener {
 
     private val viewModel: CharactersFragmentViewModel by viewModels()
+
+    companion object {
+        const val CHARACTER_NAME = "id"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,5 +50,11 @@ class CharactersFragment : Fragment(), FavoriteListener {
 
     override fun onFavoriteClick(checked: Boolean, character: Character) {
         viewModel.onFavoriteClick(checked, character)
+    }
+
+    override fun onItemClick(character: Character) {
+        startActivity(
+            Intent(activity, DetailsActivity::class.java).putExtra(CHARACTER_NAME, character.name)
+        )
     }
 }

@@ -4,13 +4,13 @@ import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import com.example.empire.persistence.db.DbManager
 import com.example.empire.persistence.entities.Character
+import com.example.empire.persistence.entities.Film
+import com.example.empire.persistence.entities.Planet
 import com.example.empire.persistence.entities.Vehicle
 import com.example.empire.utils.StringUtil
 import com.example.empire.web.ContentReceiver
 import com.example.empire.web.WebManager
-import com.example.empire.web.responses.PeopleResponse
-import com.example.empire.web.responses.SpeciesResponse
-import com.example.empire.web.responses.VehicleResponse
+import com.example.empire.web.responses.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -30,11 +30,13 @@ class CharacterRepository @Inject constructor(
 
     override fun onPeopleContent(body: PeopleResponse?) {
         body?.results?.forEach { result ->
-            characterListWeb.value?.add(Character(name = result.name))
+            addCharacter(result)
+
             when(result.species.isNullOrEmpty()) {
                 true -> webManager.getAvatar(result.name, "NA")
                 false -> webManager.getSpecies(result.name, result.species[0])
             }
+
             result.vehicles.forEach { webManager.getVehicle(result.name, it) }
         }
 
@@ -73,6 +75,13 @@ class CharacterRepository @Inject constructor(
         characterListLiveData.value = characterListDb
     }
 
+    override fun onPlanetContent(name: String, body: PlanetResponse?) {
+        characterListWeb.value?.find { it.name == name }.let {
+            it?.homeworld?.name = body?.name
+        }
+        characterListLiveData.value = characterListWeb.value
+    }
+
     fun getCharacters() {
         characterListDb = dbManager.dao.getAll()
         webManager.getCharacters()
@@ -84,5 +93,24 @@ class CharacterRepository @Inject constructor(
 
     fun remove(character: Character) {
         dbManager.delete(character)
+    }
+
+    fun getCharacterByName(name: String) : Character? = characterListLiveData.value?.find {
+        it.name == name
+    }
+
+    private fun addCharacter(result: Results) {
+        characterListWeb.value?.add(
+            Character(
+                name = result.name,
+                gender = result.gender,
+                skinColor = result.skinColor,
+                homeworld = Planet(url = result.homeworld)
+            ).apply {
+                result.films.map {
+                    movies.add(Film(url = it))
+                }
+            }
+        )
     }
 }

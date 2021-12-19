@@ -15,7 +15,11 @@ class CharacterViewHolder(
     fun bind(character: Character, listener: FavoriteListener) {
         binding.character = character
         binding.avatar.setImageBitmap(character.avatar)
-        binding.checkbox.apply { setOnClickListener { listener.onFavoriteClick(isChecked, character) } }
+        binding.layout.setOnClickListener { listener.onItemClick(character) }
+
+        binding.checkbox.apply { setOnClickListener {
+            listener.onFavoriteClick(isChecked, character)
+        }}
 
         if (character.vehicles.isNotEmpty()) {
             binding.vehicles.visibility = View.VISIBLE

@@ -5,4 +5,8 @@
     <string name="dev_name">Miguel Pacheco de Matos</string>
     <string name="dev_birth_date">02/03/1988</string>
     <string name="vehicles">VEHICLES</string>
+    <string name="gender">GENDER</string>
+    <string name="skin_color">SKIN COLOR</string>
+    <string name="homeworld">HOMEWORLD</string>
+    <string name="movies">MOVIES</string>
 </resources>
