@@ -1,7 +1,7 @@
 package com.example.empire.persistence
 
 import android.graphics.Bitmap
-import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.empire.persistence.db.DbManager
 import com.example.empire.persistence.entities.Character
 import com.example.empire.utils.StringUtil
@@ -17,10 +17,11 @@ import javax.inject.Singleton
 class CharacterRepository @Inject constructor(
     private val webManager: WebManager,
     private val dbManager: DbManager,
-    val characterListLiveData: MediatorLiveData<List<Character>>
+    private val characterListWeb: MutableLiveData<ArrayList<Character>>,
+    val characterListLiveData: MutableLiveData<List<Character>>
 ) : ContentReceiver {
 
-    private val characterList = ArrayList<Character>()
+    private lateinit var characterListDb: List<Character>
 
     init {
         webManager.receiver = this
@@ -28,7 +29,7 @@ class CharacterRepository @Inject constructor(
 
     override fun onPeopleContent(body: PeopleResponse?) {
         body?.results?.forEach { result ->
-            characterList.add(Character(result.name))
+            characterListWeb.value?.add(Character(name = result.name))
             when(result.species.isNullOrEmpty()) {
                 true -> webManager.getAvatar(result.name, "NA")
                 false -> webManager.getSpecies(result.name, result.species[0])
@@ -41,7 +42,7 @@ class CharacterRepository @Inject constructor(
 
     override fun onSpeciesContent(name: String, body: SpeciesResponse?) {
         body?.language?.let { lang ->
-            characterList.find { it.name == name }.let { char ->
+            characterListWeb.value?.find { it.name == name }.let { char ->
                 char?.language = lang
                 webManager.getAvatar(name, StringUtil.getFormattedLanguage(lang))
             }
@@ -49,22 +50,30 @@ class CharacterRepository @Inject constructor(
     }
 
     override fun onAvatarContent(name: String, bitmap: Bitmap?) {
-        characterList.find { it.name == name }.let {
+        characterListWeb.value?.find { it.name == name }.let {
             it?.avatar = bitmap
         }
 
-        if (characterList.last().name == name) {
-            characterListLiveData.value = characterList
+        if (characterListWeb.value?.last()?.name == name) {
+            characterListDb.forEach { char ->
+                characterListWeb.value?.find { it.name == char.name }?.isFavorite = char.isFavorite
+            }
+            characterListLiveData.value = characterListWeb.value
         }
     }
 
     override fun onVehicleContent(name: String, body: VehicleResponse?) {
-        characterList.find { it.name == name }.let {
+        characterListWeb.value?.find { it.name == name }.let {
             it?.vehicles?.add(body?.name)
         }
     }
 
+    override fun onPeopleFailure() {
+        characterListLiveData.value = characterListDb
+    }
+
     fun getCharacters() {
+        characterListDb = dbManager.dao.getAll()
         webManager.getCharacters()
     }
 

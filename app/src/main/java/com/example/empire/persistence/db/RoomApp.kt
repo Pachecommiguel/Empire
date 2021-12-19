@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import com.example.empire.persistence.entities.Character
 
 @TypeConverters(CharacterConverter::class)
-@Database(entities = [Character::class], version = 1, exportSchema = false)
+@Database(entities = [Character::class], version = 2, exportSchema = false)
 abstract class RoomApp : RoomDatabase() {
     abstract fun CharacterDao(): CharacterDao
 

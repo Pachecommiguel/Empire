@@ -10,4 +10,5 @@ interface ContentReceiver {
     fun onSpeciesContent(name: String, body: SpeciesResponse?)
     fun onAvatarContent(name: String, bitmap: Bitmap?)
     fun onVehicleContent(name: String, body: VehicleResponse?)
+    fun onPeopleFailure()
 }

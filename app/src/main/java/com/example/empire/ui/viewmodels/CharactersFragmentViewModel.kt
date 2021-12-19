@@ -15,11 +15,11 @@ class CharactersFragmentViewModel @Inject constructor(
 ) : ViewModel() {
     val characterList = repository.characterListLiveData
 
-/*    init {
-        if (characterList.value.isNullOrEmpty()) {
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.getCharacters()
         }
-    }*/
+    }
 
     fun onFavoriteClick(checked: Boolean, character: Character) {
         character.isFavorite = checked

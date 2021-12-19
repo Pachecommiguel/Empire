@@ -34,6 +34,7 @@ class WebManager @Inject constructor(
             }
 
             override fun onFailure(call: Call<PeopleResponse>, t: Throwable) {
+                receiver.onPeopleFailure()
                 Log.e("getPeople", "onFailure" + t.printStackTrace())
             }
         })
