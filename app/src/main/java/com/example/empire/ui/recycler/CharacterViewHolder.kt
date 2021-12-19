@@ -8,8 +8,9 @@ class CharacterViewHolder(
     private val binding: CharacterRecyclerViewItemBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(character: Character) {
+    fun bind(character: Character, listener: FavoriteListener) {
         binding.character = character
         binding.avatar.setImageBitmap(character.avatar)
+        binding.checkbox.apply { setOnClickListener { listener.onFavoriteClick(isChecked) } }
     }
 }

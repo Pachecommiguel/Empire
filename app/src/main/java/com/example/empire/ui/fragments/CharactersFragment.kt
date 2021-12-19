@@ -10,11 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.empire.databinding.FragmentCharactersBinding
 import com.example.empire.ui.LoadingLayerDelegate
 import com.example.empire.ui.recycler.CharacterListAdapter
+import com.example.empire.ui.recycler.FavoriteListener
 import com.example.empire.ui.viewmodels.CharactersFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CharactersFragment : Fragment() {
+class CharactersFragment : Fragment(), FavoriteListener {
 
     private val viewModel: CharactersFragmentViewModel by viewModels()
 
@@ -22,7 +23,7 @@ class CharactersFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val listAdapter = CharacterListAdapter()
+        val listAdapter = CharacterListAdapter(this)
         val binding = FragmentCharactersBinding.inflate(inflater, container, false)
 
         binding.characterRecyclerView.apply {
@@ -36,5 +37,9 @@ class CharactersFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    override fun onFavoriteClick(checked: Boolean) {
+
     }
 }
