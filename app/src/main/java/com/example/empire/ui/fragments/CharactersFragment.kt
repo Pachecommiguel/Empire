@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.empire.databinding.FragmentCharactersBinding
 import com.example.empire.persistence.entities.Character
 import com.example.empire.ui.LoadingLayerDelegate
-import com.example.empire.ui.recycler.CharacterListAdapter
+import com.example.empire.ui.recycler.adapters.CharacterListAdapter
 import com.example.empire.ui.recycler.FavoriteListener
 import com.example.empire.ui.viewmodels.CharactersFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint

@@ -23,13 +23,14 @@
             android:layout_height="1dp"
             android:layout_marginTop="20dp"
             android:background="?android:attr/listDivider"
-            app:layout_constraintTop_toBottomOf="@+id/vehicles" />
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <ImageView
             android:id="@+id/avatar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/vehicles"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginBottom="20dp"
@@ -46,17 +47,6 @@
             android:layout_marginStart="20dp"
             tools:text="@string/app_name" />
 
-        <TextView
-            android:id="@+id/vehicles"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/vehicles"
-            android:textColor="@color/red"
-            android:visibility="visible"
-            app:layout_constraintTop_toBottomOf="@+id/avatar"
-            tools:text="@string/app_name" />
-
         <CheckBox
             android:id="@+id/checkbox"
             android:layout_width="wrap_content"
@@ -66,6 +56,31 @@
             app:layout_constraintBottom_toBottomOf="@+id/avatar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/avatar" />
+
+        <TextView
+            android:id="@+id/vehicles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/vehicles"
+            android:textColor="@color/red"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/vehicle_layout"
+            tools:text="@string/app_name" />
+
+        <LinearLayout
+            android:id="@+id/vehicle_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/divider"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/vehicle_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

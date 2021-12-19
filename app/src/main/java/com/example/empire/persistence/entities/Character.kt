@@ -10,6 +10,6 @@ data class Character(
     var name : String,
     var language: String? = null,
     var avatar: Bitmap? = null,
-    var vehicles: ArrayList<String?> = arrayListOf(),
+    var vehicles: ArrayList<Vehicle> = arrayListOf(),
     var isFavorite: Boolean = false
 )

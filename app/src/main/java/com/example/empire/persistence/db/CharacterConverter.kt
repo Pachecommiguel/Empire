@@ -3,6 +3,7 @@ package com.example.empire.persistence.db
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.room.TypeConverter
+import com.example.empire.persistence.entities.Vehicle
 import com.google.gson.Gson
 import java.io.ByteArrayOutputStream
 
@@ -19,8 +20,8 @@ object CharacterConverter {
     fun toBitmap(byteArray: ByteArray): Bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
 
     @TypeConverter
-    fun toJson(list: ArrayList<String?>): String = Gson().toJson(list)
+    fun toJson(list: ArrayList<Vehicle?>): String = Gson().toJson(list)
 
     @TypeConverter
-    fun fromJsonToList(src: String): ArrayList<String?> = Gson().fromJson(src, ArrayList<String?>()::class.java)
+    fun fromJsonToList(src: String): ArrayList<Vehicle?> = Gson().fromJson(src, ArrayList<Vehicle?>()::class.java)
 }

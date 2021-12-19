@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import com.example.empire.persistence.db.DbManager
 import com.example.empire.persistence.entities.Character
+import com.example.empire.persistence.entities.Vehicle
 import com.example.empire.utils.StringUtil
 import com.example.empire.web.ContentReceiver
 import com.example.empire.web.WebManager
@@ -64,7 +65,7 @@ class CharacterRepository @Inject constructor(
 
     override fun onVehicleContent(name: String, body: VehicleResponse?) {
         characterListWeb.value?.find { it.name == name }.let {
-            it?.vehicles?.add(body?.name)
+            it?.vehicles?.add(Vehicle(body?.name))
         }
     }
 

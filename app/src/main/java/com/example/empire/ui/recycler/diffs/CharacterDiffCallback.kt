@@ -1,4 +1,4 @@
-package com.example.empire.ui.recycler
+package com.example.empire.ui.recycler.diffs
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.empire.persistence.entities.Character
