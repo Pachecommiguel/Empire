@@ -106,11 +106,7 @@ class CharacterRepository @Inject constructor(
                 gender = result.gender,
                 skinColor = result.skinColor,
                 homeworld = Planet(url = result.homeworld)
-            ).apply {
-                result.films.map {
-                    movies.add(Film(url = it))
-                }
-            }
+            )
         )
     }
 }

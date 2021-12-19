@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailsFragmentViewModel@Inject constructor(
+class DetailsFragmentViewModel @Inject constructor(
     private val repository: CharacterRepository
 ) : ViewModel() {
 

@@ -14,6 +14,5 @@ data class Character(
     var isFavorite: Boolean = false,
     var gender: String,
     var skinColor: String,
-    var homeworld: Planet?,
-    var movies: ArrayList<Film> = arrayListOf()
+    var homeworld: Planet?
 )

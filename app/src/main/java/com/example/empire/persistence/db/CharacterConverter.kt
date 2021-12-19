@@ -3,7 +3,6 @@ package com.example.empire.persistence.db
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.room.TypeConverter
-import com.example.empire.persistence.entities.Film
 import com.example.empire.persistence.entities.Planet
 import com.example.empire.persistence.entities.Vehicle
 import com.google.gson.Gson
@@ -32,10 +31,4 @@ object CharacterConverter {
 
     @TypeConverter
     fun fromJson(src: String): Planet = Gson().fromJson(src, Planet::class.java)
-
-    @TypeConverter
-    fun fromFilmToJson(list: ArrayList<Film?>): String = Gson().toJson(list)
-
-    @TypeConverter
-    fun fromJsonToListFilm(src: String): ArrayList<Film?> = Gson().fromJson(src, ArrayList<Film?>()::class.java)
 }
